@@ -14,7 +14,7 @@
         }                                                               \
     } while(0)
 
-#define GPIO_OUTPUT_PIN_SEL (1ULL<<GPIO_NUM_17 )
+#define GPIO_OUTPUT_PIN_SEL ( 1ULL << GPIO_NUM_17 || 1ULL <<  GPIO_NUM_23 )
 void iopins_init(void) {
     gpio_config_t io_conf;
     io_conf.intr_type = GPIO_INTR_DISABLE;
@@ -30,45 +30,42 @@ gpio_num_t scl_pin = GPIO_NUM_22;
 uint32_t speed_hz = 100000;
 uint8_t address = 0x15;
 i2c_port_t bus_num = I2C_NUM_0; 
-uint8_t DataToSend[] = {5, 15, 30, 60};
-size_t len = sizeof(DataToSend);
+uint8_t DataToReceive[] = {2, 2, 2, 2};
+size_t len = sizeof(DataToReceive);
 
 
-i2c_config_t conf = {
-    .mode = I2C_MODE_MASTER,
+i2c_config_t conf_slave = {
+    .mode = I2C_MODE_SLAVE,
     .sda_io_num = sda_pin,
     .scl_io_num = scl_pin,            
     .sda_pullup_en = GPIO_PULLUP_ENABLE,  
     .scl_pullup_en = GPIO_PULLUP_ENABLE,
-    .master = {
-        .clk_speed = speed_hz
+    .slave = {
+        .addr_10bit_en = 0,
+        .slave_addr = address,  
     },
     .clk_flags = 0, 
 };
 
-
-esp_err_t sendData(const uint8_t *data, size_t len )
-{
-        i2c_cmd_handle_t cmd = i2c_cmd_link_create();
-        RETURN_IF_ERR(i2c_master_start(cmd));
-        RETURN_IF_ERR(i2c_master_write_byte(cmd, address << 1, true));
-        RETURN_IF_ERR(i2c_master_write(cmd, data, len, I2C_MASTER_LAST_NACK));
-        RETURN_IF_ERR(i2c_master_stop(cmd));
-        RETURN_IF_ERR(i2c_master_cmd_begin(bus_num, cmd, pdMS_TO_TICKS(25)));
-    return ESP_OK;
-}
-
+// esp_err_t i2c_set_pin(i2c_port_t i2c_num, int sda_io_num, int scl_io_num,
+//                      bool sda_pullup_en, bool scl_pullup_en, i2c_mode_t mode);
 
 timeout send_data { msec(1000) }; // timeout zajistuje posilani dat do PC kazdych 1000 ms
 bool L_G = true;
-int i = 0;
+int i = 0; 
 
 extern "C" void app_main() {  // example for connect ESP32 with I2C
     iopins_init();
     gpio_set_level(GPIO_NUM_17, 1);
-    ESP_ERROR_CHECK(i2c_param_config(bus_num, &conf));
-    ESP_ERROR_CHECK(i2c_driver_install(bus_num, I2C_MODE_MASTER, 0, 0, 0));
-    // ESP_ERROR_CHECK(sendData( DataToSend, len ));
+    ESP_ERROR_CHECK(i2c_param_config(bus_num, &conf_slave));
+    ESP_ERROR_CHECK(i2c_driver_install(bus_num, I2C_MODE_SLAVE, 2000, 2000, 0)); 
+    gpio_set_level(GPIO_NUM_23, 1); // yellow diode = ready for accepting data 
+    vTaskDelay(pdMS_TO_TICKS(3000)); // wait for data from master 
+    ESP_ERROR_CHECK(i2c_slave_read_buffer(bus_num, DataToReceive, 4, pdMS_TO_TICKS(25))); 
+    gpio_set_level(GPIO_NUM_23, 0); // yellow diode turn off = data was read
+    for (int k = 0; k < 4; k++) {
+        ESP_LOGI("DATA:", "%i \n", DataToReceive[k] );
+        }
     
     while (true) {
         if (send_data) {  // is board still working? 
