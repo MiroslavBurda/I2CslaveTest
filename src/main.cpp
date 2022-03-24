@@ -14,7 +14,7 @@
         }                                                               \
     } while(0)
 
-#define GPIO_OUTPUT_PIN_SEL ( 1ULL << GPIO_NUM_17 || 1ULL <<  GPIO_NUM_23 )
+#define GPIO_OUTPUT_PIN_SEL ( 1ULL << GPIO_NUM_17 | 1ULL <<  GPIO_NUM_22 )
 void iopins_init(void) {
     gpio_config_t io_conf;
     io_conf.intr_type = GPIO_INTR_DISABLE;
@@ -25,8 +25,8 @@ void iopins_init(void) {
     gpio_config(&io_conf);
 }
 
-gpio_num_t sda_pin = GPIO_NUM_21;
-gpio_num_t scl_pin = GPIO_NUM_22; 
+gpio_num_t sda_pin = GPIO_NUM_32;
+gpio_num_t scl_pin = GPIO_NUM_33; 
 uint32_t speed_hz = 100000;
 uint8_t address = 0x15;
 i2c_port_t bus_num = I2C_NUM_0; 
@@ -59,22 +59,21 @@ extern "C" void app_main() {  // example for connect ESP32 with I2C
     gpio_set_level(GPIO_NUM_17, 1);
     ESP_ERROR_CHECK(i2c_param_config(bus_num, &conf_slave));
     ESP_ERROR_CHECK(i2c_driver_install(bus_num, I2C_MODE_SLAVE, 2000, 2000, 0)); 
-    gpio_set_level(GPIO_NUM_23, 1); // yellow diode = ready for accepting data 
-    vTaskDelay(pdMS_TO_TICKS(3000)); // wait for data from master 
-    ESP_ERROR_CHECK(i2c_slave_read_buffer(bus_num, DataToReceive, 4, pdMS_TO_TICKS(25))); 
-    gpio_set_level(GPIO_NUM_23, 0); // yellow diode turn off = data was read
-    for (int k = 0; k < 4; k++) {
-        ESP_LOGI("DATA:", "%i \n", DataToReceive[k] );
-        }
-    
+    gpio_set_level(GPIO_NUM_22, 1); // yellow diode = ready for accepting data 
+
     while (true) {
-        if (send_data) {  // is board still working? 
-            send_data.ack();
-            if (L_G) L_G = false; else  L_G = true;
-            gpio_set_level(GPIO_NUM_17, L_G);
+        ESP_ERROR_CHECK(i2c_slave_read_buffer(bus_num, DataToReceive, 4, pdMS_TO_TICKS(25))); 
+        for (int k = 0; k < 4; k++) {
+            ESP_LOGI("DATA:", "%i, ", DataToReceive[k] );
         }
 
-        ESP_LOGI("TAG1", "%i \n", i++);  
-        vTaskDelay(pdMS_TO_TICKS(500));   
+        //if (send_data) {  // is board still working? 
+        //    send_data.ack();
+            if (L_G) L_G = false; else  L_G = true;
+            gpio_set_level(GPIO_NUM_17, L_G);
+        //}
+
+        ESP_LOGI("TAG1: ", "%i \n", i++);  
+        vTaskDelay(pdMS_TO_TICKS(1000));   
     }
 }
