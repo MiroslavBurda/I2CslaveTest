@@ -1,0 +1,31 @@
+Compiling .pio\build\esp32dev\bootloader\esp-idf\micro-ecc\uECC_verify_antifault.c.o
+Compiling .pio\build\esp32dev\bootloader\esp-idf\main\bootloader_start.c.o
+Archiving .pio\build\esp32dev\bootloader\esp-idf\soc\libsoc.a
+Archiving .pio\build\esp32dev\bootloader\esp-idf\spi_flash\libspi_flash.a
+Archiving .pio\build\esp32dev\bootloader\esp-idf\main\libmain.a
+Archiving .pio\build\esp32dev\bootloader\esp-idf\micro-ecc\libmicro-ecc.a
+Linking .pio\build\esp32dev\bootloader.elf
+c:/users/robotika/.platformio/packages/toolchain-xtensa32@2.80200.200827/bin/../lib/gcc/xtensa-esp32-elf/8.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: .pio\build\esp32dev\bootloader\esp-idf\main\libmain.a(bootloader_start.c.o):(.literal.call_start_cpu0+0x8): undefined reference to `bootloader_init'
+c:/users/robotika/.platformio/packages/toolchain-xtensa32@2.80200.200827/bin/../lib/gcc/xtensa-esp32-elf/8.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: .pio\build\esp32dev\bootloader\esp-idf\main\libmain.a(bootloader_start.c.o):(.literal.call_start_cpu0+0xc): undefined reference to `bootloader_reset'
+c:/users/robotika/.platformio/packages/toolchain-xtensa32@2.80200.200827/bin/../lib/gcc/xtensa-esp32-elf/8.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: .pio\build\esp32dev\bootloader\esp-idf\main\libmain.a(bootloader_start.c.o):(.literal.call_start_cpu0+0x14): undefined reference to `bootloader_utility_load_partition_table'
+c:/users/robotika/.platformio/packages/toolchain-xtensa32@2.80200.200827/bin/../lib/gcc/xtensa-esp32-elf/8.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: .pio\build\esp32dev\bootloader\esp-idf\main\libmain.a(bootloader_start.c.o):(.literal.call_start_cpu0+0x18): undefined reference to `esp_log_timestamp'
+c:/users/robotika/.platformio/packages/toolchain-xtensa32@2.80200.200827/bin/../lib/gcc/xtensa-esp32-elf/8.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: .pio\build\esp32dev\bootloader\esp-idf\main\libmain.a(bootloader_start.c.o):(.literal.call_start_cpu0+0x20): undefined reference to `bootloader_utility_get_selected_boot_partition'
+c:/users/robotika/.platformio/packages/toolchain-xtensa32@2.80200.200827/bin/../lib/gcc/xtensa-esp32-elf/8.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: .pio\build\esp32dev\bootloader\esp-idf\main\libmain.a(bootloader_start.c.o):(.literal.call_start_cpu0+0x24): undefined reference to `bootloader_common_get_reset_reason'
+c:/users/robotika/.platformio/packages/toolchain-xtensa32@2.80200.200827/bin/../lib/gcc/xtensa-esp32-elf/8.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: .pio\build\esp32dev\bootloader\esp-idf\main\libmain.a(bootloader_start.c.o):(.literal.call_start_cpu0+0x28): undefined reference to `bootloader_utility_load_boot_image'
+c:/users/robotika/.platformio/packages/toolchain-xtensa32@2.80200.200827/bin/../lib/gcc/xtensa-esp32-elf/8.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: .pio\build\esp32dev\bootloader\esp-idf\main\libmain.a(bootloader_start.c.o): in function `call_start_cpu0':
+C:\Users\Robotika\.platformio\packages\framework-espidf@3.40100.200827\components\bootloader\subproject\main/bootloader_start.c:33: undefined reference to `bootloader_init'
+c:/users/robotika/.platformio/packages/toolchain-xtensa32@2.80200.200827/bin/../lib/gcc/xtensa-esp32-elf/8.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: C:\Users\Robotika\.platformio\packages\framework-espidf@3.40100.200827\components\bootloader\subproject\main/bootloader_start.c:34: undefined reference to `bootloader_reset'
+c:/users/robotika/.platformio/packages/toolchain-xtensa32@2.80200.200827/bin/../lib/gcc/xtensa-esp32-elf/8.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: .pio\build\esp32dev\bootloader\esp-idf\main\libmain.a(bootloader_start.c.o): in function `select_partition_number':
+C:\Users\Robotika\.platformio\packages\framework-espidf@3.40100.200827\components\bootloader\subproject\main/bootloader_start.c:60: undefined reference to `bootloader_utility_load_partition_table'
+c:/users/robotika/.platformio/packages/toolchain-xtensa32@2.80200.200827/bin/../lib/gcc/xtensa-esp32-elf/8.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: C:\Users\Robotika\.platformio\packages\framework-espidf@3.40100.200827\components\bootloader\subproject\main/bootloader_start.c:61: undefined reference to `esp_log_timestamp'
+c:/users/robotika/.platformio/packages/toolchain-xtensa32@2.80200.200827/bin/../lib/gcc/xtensa-esp32-elf/8.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: .pio\build\esp32dev\bootloader\esp-idf\main\libmain.a(bootloader_start.c.o): in function `selected_boot_partition':
+C:\Users\Robotika\.platformio\packages\framework-espidf@3.40100.200827\components\bootloader\subproject\main/bootloader_start.c:75: undefined reference to `bootloader_utility_get_selected_boot_partition'
+c:/users/robotika/.platformio/packages/toolchain-xtensa32@2.80200.200827/bin/../lib/gcc/xtensa-esp32-elf/8.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: C:\Users\Robotika\.platformio\packages\framework-espidf@3.40100.200827\components\bootloader\subproject\main/bootloader_start.c:79: undefined reference to `bootloader_common_get_reset_reason'
+c:/users/robotika/.platformio/packages/toolchain-xtensa32@2.80200.200827/bin/../lib/gcc/xtensa-esp32-elf/8.2.0/../../../../xtensa-esp32-elf/bin/ld.exe: .pio\build\esp32dev\bootloader\esp-idf\main\libmain.a(bootloader_start.c.o): in function `call_start_cpu0':
+C:\Users\Robotika\.platformio\packages\framework-espidf@3.40100.200827\components\bootloader\subproject\main/bootloader_start.c:53: undefined reference to `bootloader_utility_load_boot_image'
+collect2.exe: error: ld returned 1 exit status
+*** [.pio\build\esp32dev\bootloader.elf] Error 1
+============================================== [FAILED] Took 264.87 seconds ==============================================
+The terminal process "C:\Users\Robotika\.platformio\penv\Scripts\platformio.exe 'run'" terminated with exit code: 1.
+
+Terminal will be reused by tasks, press any key to close it.
